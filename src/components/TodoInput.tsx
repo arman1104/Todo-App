@@ -11,7 +11,7 @@ const TodoInput = () => {
         <input
           type="text"
           placeholder="Create a new todo…"
-          className="flex-1 bg-transparent text-[18px] text-gray-700 placeholder-gray-400 outline-none dark:text-text-dark dark:placeholder-text-muted"
+          className="flex-1 bg-transparent text-[15px] sm:text-[18px] text-gray-700 placeholder-gray-400 outline-none dark:text-text-dark dark:placeholder-text-muted"
         />
       </div>
     </div>
