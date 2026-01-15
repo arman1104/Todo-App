@@ -1,22 +1,24 @@
 const FilterBar = () => {
   return (
-    <div className="flex items-center justify-between px-5 py-4 text-sm text-gray-500 dark:text-gray-400">
+    <div className="flex items-center justify-between px-5 py-4 text-sm text-text-muted">
       {/* Items left */}
       <span>5 items left</span>
 
       {/* Filters */}
       <div className="flex gap-4 font-bold">
-        <button className="text-blue-500">All</button>
-        <button className="hover:text-gray-700 dark:hover:text-gray-200">
+        <button className="text-accent">All</button>
+
+        <button className="hover:text-text-light dark:hover:text-hover-dark">
           Active
         </button>
-        <button className="hover:text-gray-700 dark:hover:text-gray-200">
+
+        <button className="hover:text-text-light dark:hover:text-hover-dark">
           Completed
         </button>
       </div>
 
       {/* Clear completed */}
-      <button className="hover:text-gray-700 dark:hover:text-gray-200">
+      <button className="hover:text-text-light dark:hover:text-hover-dark">
         Clear Completed
       </button>
     </div>

@@ -4,7 +4,7 @@ import TodoItem from "./TodoItem";
 const TodoList = () => {
   return (
     <div className="mx-auto mt-6 max-w-xl px-6">
-      <div className="overflow-hidden rounded-md bg-white shadow-md dark:bg-[#25273c]">
+      <div className="overflow-hidden rounded-md bg-white shadow-md dark:bg-card-dark">
         <TodoItem />
         <TodoItem />
         <TodoItem />
