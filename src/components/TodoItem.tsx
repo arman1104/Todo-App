@@ -1,23 +1,54 @@
 import iconCross from "../assets/images/icon-cross.svg";
+import iconCheck from "../assets/images/icon-check.svg";
 
-const TodoItem = () => {
+const TodoItem = ({ todo, index, onToggle, onDelete, onReorder }: any) => {
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData("text/plain", index.toString());
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const fromIndex = Number(e.dataTransfer.getData("text/plain"));
+    onReorder(fromIndex, index);
+  };
+
   return (
-    <div className="flex items-center gap-4 px-5 py-4 border-b border-border-light dark:border-border-dark">
+    <div
+      draggable
+      onDragStart={handleDragStart}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={handleDrop}
+      className="flex cursor-grab items-center gap-3 px-4 py-3 border-b border-border-light dark:border-border-dark active:cursor-grabbing"
+    >
       {/* Checkbox */}
-      <div className="h-5 w-5 sm:h-5 sm:w-5 rounded-full border border-border-light dark:border-border-dark" />
+      <button
+        onClick={() => onToggle(todo.id)}
+        className={`flex h-4 w-4 items-center justify-center rounded-full
+          ${
+            todo.completed
+              ? "bg-gradient-to-br from-cyan-400 to-purple-500"
+              : "border border-border-light dark:border-border-dark"
+          }`}
+      >
+        {todo.completed && (
+          <img src={iconCheck} alt="checked" className="h-2 w-2" />
+        )}
+      </button>
 
-      {/* Todo text */}
-      <p className="flex-1 text-[15px] sm:text-[18px] text-text-light dark:text-text-dark">
-        Complete online JavaScript course
+      {/* Text */}
+      <p
+        className={`flex-1 text-[15px] sm:text-[18px] ${
+          todo.completed
+            ? "line-through text-text-muted"
+            : "text-text-light dark:text-text-dark"
+        }`}
+      >
+        {todo.text}
       </p>
 
-      {/* Delete icon */}
-      <button>
-        <img
-          src={iconCross}
-          alt="delete"
-          className="h-3.5 w-3.5 sm:h-4 sm:w-4"
-        />
+      {/* Delete */}
+      <button onClick={() => onDelete(todo.id)}>
+        <img src={iconCross} alt="delete" className="h-3.5 w-3.5" />
       </button>
     </div>
   );

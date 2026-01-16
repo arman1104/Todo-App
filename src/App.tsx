@@ -8,8 +8,61 @@ import Header from "./components/Header";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
+type Todo = {
+  id: number;
+  text: string;
+  completed: boolean;
+};
+
 const App = () => {
   const [isDark, setIsDark] = useState(true);
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
+
+  // Add Todo
+  const addTodo = (text: string) => {
+    if (!text.trim()) return;
+
+    setTodos((prev) => [{ id: Date.now(), text, completed: false }, ...prev]);
+  };
+
+  // Toggle Todo
+  const toggleTodo = (id: number) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+  // Delete Todo
+  const deleteTodo = (id: number) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
+  // Clear Completed Todo
+  const clearCompleted = () => {
+    setTodos((prev) => prev.filter((todo) => !todo.completed));
+  };
+
+  // Filter Todo
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true;
+  });
+
+  const itemsLeft = todos.filter((todo) => !todo.completed).length;
+
+  // Reorder Todo
+  const reorderTodos = (fromIndex: number, toIndex: number) => {
+    setTodos((prev) => {
+      const updated = [...prev];
+      const [moved] = updated.splice(fromIndex, 1);
+      updated.splice(toIndex, 0, moved);
+      return updated;
+    });
+  };
 
   // Toggle dark class on <html>
   useEffect(() => {
@@ -50,11 +103,22 @@ const App = () => {
             />
 
             <div className="mt-10">
-              <TodoInput />
+              {/* <TodoInput/> */}
+              <TodoInput onAddTodo={addTodo} />
             </div>
 
             <div className="mt-8 sm:mt-12">
-              <TodoList />
+              {/* <TodoList /> */}
+              <TodoList
+                todos={filteredTodos}
+                onToggle={toggleTodo}
+                onDelete={deleteTodo}
+                filter={filter}
+                onFilterChange={setFilter}
+                onClearCompleted={clearCompleted}
+                itemsLeft={itemsLeft}
+                onReorder={reorderTodos}
+              />
             </div>
           </div>
         </div>
