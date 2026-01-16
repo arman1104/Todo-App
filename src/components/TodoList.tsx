@@ -32,7 +32,7 @@ const TodoList = ({
           onClearCompleted={onClearCompleted}
         />
       </div>
-      <p className="mt-10 text-center text-sm text-text-muted">
+      <p className="mt-10 text-center text-sm text-text-muted hidden sm:block">
         Drag and drop to reorder list
       </p>
     </div>
